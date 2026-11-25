@@ -13,7 +13,7 @@
 <link rel="icon" href="assets/img/logo-mark.png"><link rel="apple-touch-icon" href="assets/img/logo-mark.png">
 <link rel="preload" href="assets/fonts/csm-serif.ttf" as="font" type="font/ttf" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&amp;display=swap">
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('mo');try{if(localStorage.getItem('csm_a11y')==='1')document.documentElement.classList.add('a11y')}catch(e){}</script>
-<link rel="stylesheet" href="assets/base.css?v=2611250558"><link rel="stylesheet" href="assets/site.css?v=2611250558">
+<link rel="stylesheet" href="assets/base.css?v=2611251027"><link rel="stylesheet" href="assets/site.css?v=2611251027">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "MedicalClinic", "name": "Центр современной медицины", "legalName": "ООО «Центр Современной Медицины»", "url": "https://csm-ci.ru/", "telephone": "+7 (913) 55-88-711", "email": "zcm0711@mail.ru", "logo": "https://csm-ci.ru/assets/img/logo-mark.png", "image": "https://csm-ci.ru/assets/img/hero.jpg", "address": {"@type": "PostalAddress", "streetAddress": "ул. Карла Маркса, зд. 75А, пом. 2, офис 1-01, 1-02", "addressLocality": "Красноярск", "postalCode": "660049", "addressCountry": "RU"}, "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "08:00", "closes": "20:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "18:00"}], "medicalSpecialty": ["Gynecologic", "Obstetric", "Neurologic", "Musculoskeletal", "Cardiovascular", "Endocrine", "Gastroenterologic", "Genetic", "Radiography", "PrimaryCare"], "taxID": "2466301286", "sameAs": ["https://t.me/CSMedicina", "https://prodoctorov.ru/krasnoyarsk/lpu/108225-centr-sovremennoy-mediciny/"]}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://csm-ci.ru/"}, {"@type": "ListItem", "position": 2, "name": "О клинике", "item": "https://csm-ci.ru/o-klinike.html"}]}]</script>
 </head>
 <body>
@@ -39,6 +39,13 @@
 <main id="main">
 
 <style>
+.ok-gal{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ok-gal figure{margin:0;border-radius:24px;overflow:hidden;background:#E3F1F0;aspect-ratio:4/5;position:relative}
+.ok-gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.ok-gal figure:hover img{transform:scale(1.03)}
+.ok-gal figcaption{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.92);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600}
+@media(max-width:900px){.ok-gal{grid-template-columns:repeat(2,1fr);gap:10px}.ok-gal figure{border-radius:18px}.ok-gal figcaption{left:8px;bottom:8px;padding:4px 10px;font-size:12px;font-weight:500}}
+
 .ok-hist{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
 .ok-hist .pic{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:4/4.4;box-shadow:0 40px 80px -40px rgba(33,59,64,.45)}
 .ok-hist .pic img{width:100%;height:100%;object-fit:cover}
@@ -120,6 +127,11 @@
 <a class="fc r rv" style="--d:240ms" href="diagnostika.html"><span class="tg">Функциональная диагностика</span><h3>ЭКГ, холтер, СМАД, ЭЭГ, КТГ</h3><p>Запись и расшифровка ЭКГ, суточное мониторирование ЭКГ и давления, ЭЭГ, КТГ плода.</p><span class="lnk">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
 </div>
 <figure class="phf rv"><img src="assets/img/facade.webp" alt="Интерьер центра: коридор и зона ожидания" loading="lazy"></figure></div></section>
+
+<section class="sec" id="galereya"><div class="wrap">
+<div class="sh rv"><div><h2>Как выглядит <em>центр</em></h2></div><p>Реальные фотографии кабинетов центра на ул. Карла Маркса, 75А.</p></div>
+<div class="ok-gal"><figure class="rv" style="--d:0ms"><img src="assets/img/gallery/g1.jpg" alt="Гинекологический кабинет: кресло, кольпоскоп и лазерный аппарат" loading="lazy"><figcaption>Гинекологический кабинет</figcaption></figure><figure class="rv" style="--d:60ms"><img src="assets/img/gallery/g2.jpg" alt="Процедурный кабинет с кушеткой и медицинским холодильником" loading="lazy"><figcaption>Процедурный кабинет</figcaption></figure><figure class="rv" style="--d:120ms"><img src="assets/img/gallery/g3.jpg" alt="Кабинет врача: рабочее место и смотровая кушетка" loading="lazy"><figcaption>Кабинет приёма</figcaption></figure><figure class="rv" style="--d:180ms"><img src="assets/img/gallery/g4.jpg" alt="Аппарат УЗИ в кабинете ультразвуковой диагностики" loading="lazy"><figcaption>УЗИ</figcaption></figure><figure class="rv" style="--d:240ms"><img src="assets/img/gallery/g5.jpg" alt="Кабинет массажа: массажный стол" loading="lazy"><figcaption>Кабинет массажа</figcaption></figure><figure class="rv" style="--d:300ms"><img src="assets/img/gallery/g6.jpg" alt="Медсестра готовит процедурный кабинет к приёму" loading="lazy"><figcaption>Подготовка к процедуре</figcaption></figure></div>
+</div></section>
 
 <section class="sec"><div class="wrap ok-place">
 <div class="okph rv"><img src="assets/img/dir-08.jpg" alt="Процедурный кабинет Центра современной медицины" loading="lazy"></div>
@@ -226,5 +238,5 @@
 <small>Пожалуйста, не указывайте в заявке симптомы и диагнозы — обсудите их с врачом на приёме.</small></form></div>
 <div class="srch" id="search" role="dialog" aria-modal="true" aria-label="Поиск по сайту"><button type="button" class="ib x" aria-label="Закрыть поиск">×</button><div class="in4"><input type="search" placeholder="Услуга, врач или симптом-направление" aria-label="Поиск"><p class="hint">Например: УЗИ, SVF, гинеколог, ЭКГ, массаж</p><ul></ul></div></div>
 <div class="cookie" id="cookie" role="dialog" aria-label="Использование cookie"><b>Мы используем cookie</b>Это помогает сайту работать и показывает нам, какие страницы полезны. Аналитика (Яндекс Метрика) включится только с вашего согласия. Подробнее — в <a href="cookie.html">политике cookie</a>.<div class="cb2"><button type="button" class="btn btn-r" data-cookie="yes">Принять</button><button type="button" class="btn btn-m" data-cookie="no">Отклонить</button></div></div>
-<script src="assets/data.js?v=2611250558"></script><script src="assets/pages.js?v=2611250558"></script><script src="assets/site.js?v=2611250558"></script>
+<script src="assets/data.js?v=2611251027"></script><script src="assets/pages.js?v=2611251027"></script><script src="assets/site.js?v=2611251027"></script>
 </body></html>
