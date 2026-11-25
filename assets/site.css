@@ -1291,3 +1291,5 @@ label{font-size:13px;font-weight:500}
 .hv-snd[aria-pressed="true"] i{background:#B27080}
 .hv-snd[aria-pressed="true"] .i-on,.hv-snd[aria-pressed="true"] .t-on{display:block}
 .hv-snd[aria-pressed="true"] .i-off,.hv-snd[aria-pressed="true"] .t-off{display:none}
+/* телефон в шапке — по центру под кнопкой «Записаться на приём» */
+@media (min-width:1101px){.hcta{min-width:210px;justify-content:center}.hphone{min-width:210px;text-align:center;display:inline-flex;justify-content:center}}
