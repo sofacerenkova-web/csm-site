@@ -282,3 +282,13 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
  }
  [].forEach.call(bs,function(b){b.addEventListener('click',open)});
 })();
+
+/* ---------- звук видео на главном экране ---------- */
+(function(){
+ var b=document.querySelector('[data-sound]'),v=document.querySelector('.hvid video');if(!b||!v)return;
+ b.addEventListener('click',function(){
+  var on=v.muted;v.muted=!on;
+  if(on){if(!v.dataset.ok){v.dataset.ok=1;v.poster=v.dataset.poster;var s=v.dataset.src;v.innerHTML='<source src="'+s+'.webm" type="video/webm"><source src="'+s+'.mp4" type="video/mp4">';v.load()}var p=v.play();if(p&&p.catch)p.catch(function(){})}
+  b.setAttribute('aria-pressed',on?'true':'false');b.setAttribute('aria-label',on?'Выключить звук':'Включить звук');
+ });
+})();
