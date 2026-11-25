@@ -265,3 +265,20 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
  nav.addEventListener('click',function(e){var b=e.target.closest('.hq-b');if(!b)return;var c=l.querySelector('a');var w=c?c.getBoundingClientRect().width+12:l.clientWidth*.8;l.scrollBy({left:w*(+b.dataset.d),behavior:'smooth'})});
  l.addEventListener('scroll',function(){requestAnimationFrame(st)},{passive:true});addEventListener('resize',st);st();
 })();
+
+/* ---------- видео о центре со звуком ---------- */
+(function(){
+ var bs=document.querySelectorAll('[data-film]');if(!bs.length)return;
+ function open(){
+  var hv=document.querySelector('.hvid video');if(hv&&!hv.paused)hv.pause();
+  var o=document.createElement('div');o.className='filmx';o.setAttribute('role','dialog');o.setAttribute('aria-label','Видео о Центре современной медицины');
+  o.innerHTML='<video controls playsinline autoplay poster="assets/video/hero-poster.jpg"><source src="assets/video/hero.webm" type="video/webm"><source src="assets/video/hero.mp4" type="video/mp4"></video><button type="button" aria-label="Закрыть">&times;</button>';
+  document.body.appendChild(o);document.documentElement.style.overflow='hidden';
+  requestAnimationFrame(function(){o.classList.add('on')});
+  var v=o.querySelector('video');var p=v.play();if(p&&p.catch)p.catch(function(){});
+  function close(){v.pause();o.classList.remove('on');document.documentElement.style.overflow='';setTimeout(function(){o.remove()},300);document.removeEventListener('keydown',esc);if(hv&&hv.dataset.ok)hv.play().catch(function(){})}
+  function esc(e){if(e.key==='Escape')close()}
+  o.querySelector('button').onclick=close;o.addEventListener('click',function(e){if(e.target===o)close()});document.addEventListener('keydown',esc);
+ }
+ [].forEach.call(bs,function(b){b.addEventListener('click',open)});
+})();
