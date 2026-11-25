@@ -1,2 +1,7 @@
 User-agent: *
-Disallow: /
+Disallow: /*?q=
+Disallow: /404.html
+Allow: /
+
+Sitemap: https://csm-ci.ru/sitemap.xml
+Host: https://csm-ci.ru

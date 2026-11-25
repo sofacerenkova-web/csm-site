@@ -103,7 +103,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('.pt-tg');if(!b)r
 /* ---------- полный прайс с поиском и фильтром ---------- */
 const pl=$('[data-pricelist]');
 if(pl){const inp=$('#pq'),fb=$('#pf'),out=$('#plist');let cur='all';
- const cats=[{k:'all',t:'Все'}].concat((D.DIRECTIONS||[]).map(d=>({k:d.slug,t:d.title})));
+ const cats=[{k:'all',t:'Все'}].concat((D.DIRECTIONS||[]).filter(d=>(D.PRICES||[]).some(c=>c.dir===d.slug)).map(d=>({k:d.slug,t:d.title})));
  cats.forEach(c=>{const b=document.createElement('button');b.type='button';b.textContent=c.t;b.dataset.k=c.k;b.onclick=()=>{cur=c.k;draw()};fb.appendChild(b)});
  function draw(){const q=norm(inp.value.trim());[].forEach.call(fb.children,b=>b.classList.toggle('on',b.dataset.k===cur));let html='',n=0;const used={};
   (D.PRICES||[]).forEach(c=>{if(cur!=='all'&&c.dir!==cur)return;const it=c.items.filter(i=>!q||norm(i[1]+' '+i[0]+' '+c.cat).indexOf(q)>-1);if(!it.length)return;n+=it.length;
@@ -116,11 +116,11 @@ if(pl){const inp=$('#pq'),fb=$('#pf'),out=$('#plist');let cur='all';
 const ini=n=>n.split(' ').slice(0,2).map(w=>w[0]).join('');
 CSM.docCard=d=>'<article class="dcard rv"><a class="ava'+(d.photo?'':' nophoto')+'" href="vrach-'+d.id+'.html" aria-label="'+esc(d.name)+'">'+'<span class="ini">'+ini(d.name)+'</span><i></i>'+(d.photo?'<img src="'+d.photo+'" alt="'+esc(d.name)+'" loading="lazy" onerror="this.remove()">':'')+'</a>'+
  '<span class="tg">'+esc(d.spec)+'</span><h3><a href="vrach-'+d.id+'.html">'+esc(d.name)+'</a></h3><p class="rl">'+esc(d.role)+'</p><dl>'+
- (d.exp?'<div><dt>Стаж</dt><dd>'+esc(d.exp)+'</dd></div>':'')+'<div><dt>Приём</dt><dd>'+esc(d.sched||'по записи, уточняйте у администратора')+'</dd></div></dl>'+
+ (d.exp?'<div><dt>Стаж</dt><dd>'+esc(d.exp)+'</dd></div>':'')+'<div><dt>Приём</dt><dd>по предварительной записи</dd></div>'+(d.pd?'<div><dt>Отзывы</dt><dd><a class="pdl" href="'+d.pd+'" target="_blank" rel="noopener">на ПроДокторов ↗</a></dd></div>':'')+'</dl>'+
  '<div class="act"><a class="btn btn-r" href="#zapis" data-dir="'+esc(d.spec)+'" data-note="Запись к врачу: '+esc(d.name)+'">Записаться</a><a class="btn btn-m" href="vrach-'+d.id+'.html">Профиль</a></div></article>';
 $$('[data-doctors]').forEach(el=>{const dir=el.dataset.doctors;el.innerHTML=(D.DOCTORS||[]).filter(d=>!dir||d.dirs.indexOf(dir)>-1).map(CSM.docCard).join('')});
 const dl=$('[data-doclist]');
-if(dl){const fb=$('#df'),out=$('#dlist');const specs=['Все'].concat([...new Set(D.DOCTORS.map(d=>d.spec))]);let cur='Все';
+if(dl){const fb=$('#df'),out=$('#dlist');const specs=['Все'].concat([...new Set(D.DOCTORS.map(d=>d.spec))].sort((a,b)=>a.localeCompare(b,'ru')));let cur='Все';
  specs.forEach(s=>{const b=document.createElement('button');b.type='button';b.textContent=s;b.onclick=()=>{cur=s;draw()};fb.appendChild(b)});
  function draw(){[].forEach.call(fb.children,b=>b.classList.toggle('on',b.textContent===cur));const L=D.DOCTORS.filter(d=>cur==='Все'||d.spec===cur),N=9;out.innerHTML=L.map(CSM.docCard).join('');$$('.rv',out).forEach(x=>x.classList.add('in'));
   let mb=$('.dl-more',dl);if(mb)mb.remove();if(L.length>N){[].slice.call(out.children,N).forEach(c=>c.hidden=true);mb=document.createElement('button');mb.type='button';mb.className='pt-tg dl-more';mb.textContent='Показать всех врачей ('+L.length+')';mb.onclick=()=>{[].forEach.call(out.children,c=>c.hidden=false);mb.remove()};out.after(mb)}}
@@ -129,7 +129,7 @@ if(dl){const fb=$('#df'),out=$('#dlist');const specs=['Все'].concat([...new S
 const dp=$('[data-doctor]');
 if(dp){const id=window.CSM_DOC||new URLSearchParams(location.search).get('id');const d=(D.DOCTORS||[]).find(x=>x.id===id);if(!d){location.replace('vrachi.html');return}
  document.title=d.name+' — '+d.role+' · Центр современной медицины, Красноярск';
- const md2=$('meta[name=description]');md2&&md2.setAttribute('content',d.name+', '+d.role.toLowerCase()+' в Центре современной медицины (Красноярск). Образование, стаж, график приёма, запись онлайн.');
+ const md2=$('meta[name=description]');md2&&md2.setAttribute('content',d.name+', '+d.role.toLowerCase()+' в Центре современной медицины (Красноярск). Образование, стаж, запись онлайн.');
  $$('[data-f]',dp).forEach(el=>{const k=el.dataset.f;let v=d[k];if(k==='ini')v=ini(d.name);el.textContent=v||el.dataset.empty||'уточняется'});
  const cr=$('#crumbName');if(cr)cr.textContent=d.name;
  const dirs=(D.DIRECTIONS||[]).filter(x=>d.dirs.indexOf(x.slug)>-1);
@@ -142,7 +142,7 @@ if(dp){const id=window.CSM_DOC||new URLSearchParams(location.search).get('id');c
  const s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(ld);document.head.appendChild(s)}
 
 /* ---------- направления (хаб) ---------- */
-$$('[data-tiles]').forEach(el=>{el.innerHTML=(D.DIRECTIONS||[]).map((d,i)=>'<a class="tile rv" style="--d:'+(i%3*90)+'ms" href="'+d.slug+'.html"><img src="assets/img/'+d.img+'" alt="'+esc(d.title)+'" loading="lazy"><span class="n">'+String(i+1).padStart(2,'0')+'</span><div class="in3"><h3>'+esc(d.title)+'</h3><p>'+esc(d.short)+'</p><div class="ft2"><span>от '+d.from.replace(/^от /,'')+'</span><span class="ar">'+ARR+'</span></div></div></a>').join('')});
+$$('[data-tiles]').forEach(el=>{el.innerHTML=(D.DIRECTIONS||[]).map((d,i)=>'<a class="tile rv" style="--d:'+(i%3*90)+'ms" href="'+d.slug+'.html">'+(d.img?'<img src="assets/img/'+d.img+'" alt="'+esc(d.title)+'" loading="lazy">':'<span class="npb" role="img" aria-label="Фото скоро"></span>')+'<span class="n">'+String(i+1).padStart(2,'0')+'</span><div class="in3"><h3>'+esc(d.title)+'</h3><p>'+esc(d.short)+'</p><div class="ft2"><span>от '+d.from.replace(/^от /,'')+'</span><span class="ar">'+ARR+'</span></div></div></a>').join('')});
 
 /* ---------- анимации (как на главной) ---------- */
 function wrap(n,c){[].slice.call(n.childNodes).forEach(x=>{if(x.nodeType===3){const f=document.createDocumentFragment();x.textContent.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w)){f.appendChild(document.createTextNode(' '));return}const o=document.createElement('span');o.className='hw';const i=document.createElement('span');i.style.setProperty('--i',c.n++);i.textContent=w;o.appendChild(i);f.appendChild(o)});x.replaceWith(f)}else if(x.nodeType===1&&x.tagName!=='BR'&&x.tagName!=='A')wrap(x,c)})}
@@ -184,3 +184,84 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
  let r;t.addEventListener('scroll',()=>{cancelAnimationFrame(r);r=requestAnimationFrame(upd)},{passive:true});addEventListener('resize',upd);
  t.querySelectorAll('.rvw').forEach(c=>{const p=c.querySelector('.rvw-t');requestAnimationFrame(()=>{if(p.scrollHeight>p.clientHeight+4){const b=document.createElement('button');b.type='button';b.className='rvw-more';b.textContent='Читать целиком';b.onclick=()=>{const o=c.classList.toggle('open');b.textContent=o?'Свернуть':'Читать целиком'};p.after(b)}})});
  upd()})})();
+/* ---------- кнопка «Назад» ---------- */
+(function(){
+ document.addEventListener('click',function(e){var a=e.target.closest('[data-back]');if(!a)return;
+  var same=false;try{same=document.referrer&&new URL(document.referrer).origin===location.origin}catch(_){}
+  if(same&&history.length>1){e.preventDefault();history.back()}});
+ var f=document.querySelector('.fbk');if(!f)return;
+ function up(){f.classList.toggle('on',scrollY>520)}addEventListener('scroll',up,{passive:true});up();
+})();
+/* ---------- видео на главном экране (только десктоп) ---------- */
+(function(){
+ var v=document.querySelector('.hvid video');if(!v)return;
+ var mq=window.matchMedia('(min-width:1101px)'),rm=window.matchMedia('(prefers-reduced-motion: reduce)');
+ function load(){if(!mq.matches||v.dataset.ok)return;v.dataset.ok=1;v.poster=v.dataset.poster;
+  if(rm.matches)return;var b=v.dataset.src;
+  v.innerHTML='<source src="'+b+'.webm" type="video/webm"><source src="'+b+'.mp4" type="video/mp4">';
+  v.load();var p=v.play();if(p&&p.catch)p.catch(function(){});}
+ load();if(mq.addEventListener)mq.addEventListener('change',load);
+ document.addEventListener('visibilitychange',function(){if(!v.dataset.ok||rm.matches)return;document.hidden?v.pause():v.play().catch(function(){})});
+})();
+/* 3D-визуализация регенерации: живые «клетки», сливающиеся и делящиеся (WebGL, без библиотек) */
+(function(){
+ var cv=document.getElementById('regen3d');if(!cv)return;
+ var box=cv.parentNode,gl=null;
+ try{gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:false})}catch(e){}
+ if(!gl){box.classList.add('nogl');return}
+ var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+ var fs=[
+ 'precision highp float;uniform vec2 R;uniform float T;uniform vec2 M;',
+ 'float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}',
+ 'mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}',
+ 'vec3 tr(vec3 p){p.xz*=rot(M.x*.7+T*.1);p.yz*=rot(-M.y*.5+.25);return p;}',
+ 'float blob(vec3 p){float d=length(p)-.6+.035*sin(p.x*7.+T*1.2)*sin(p.y*6.+T)*sin(p.z*7.-T*.8);',
+ ' for(int i=0;i<6;i++){float f=float(i);float a=T*(.32+.05*f)+f*1.047;',
+ '  vec3 c=vec3(cos(a),sin(a*1.27+f)*.55,sin(a))*(.8+.14*sin(T*.6+f*1.7));',
+ '  float r=.17+.09*(.5+.5*sin(T*.9+f*2.1));d=smin(d,length(p-c)-r,.45);}return d;}',
+ 'float dots(vec3 p){float d=1e3;for(int i=0;i<9;i++){float f=float(i);float a=T*(.18+.03*f)+f*.698;',
+ ' vec3 c=vec3(cos(a)*1.08,sin(f*1.9+T*.4)*.62,sin(a)*1.08);d=min(d,length(p-c)-(.035+.02*sin(f+T)));}return d;}',
+ 'float map(vec3 p){p=tr(p);return min(blob(p),dots(p));}',
+ 'vec3 nor(vec3 p){vec2 e=vec2(.0015,0);return normalize(vec3(map(p+e.xyy)-map(p-e.xyy),map(p+e.yxy)-map(p-e.yxy),map(p+e.yyx)-map(p-e.yyx)));}',
+ 'void main(){vec2 uv=(gl_FragCoord.xy-.5*R)/min(R.x,R.y);',
+ ' vec3 ro=vec3(0,0,4.1),rd=normalize(vec3(uv,-1.55));float t=0.,md=1e3;bool hit=false;',
+ ' for(int i=0;i<90;i++){vec3 p=ro+rd*t;float d=map(p);md=min(md,d);if(d<.001){hit=true;break;}t+=d*.9;if(t>7.)break;}',
+ ' vec3 teal=vec3(.396,.773,.812),rose=vec3(.87,.66,.69),deep=vec3(.13,.42,.45);',
+ ' if(!hit){float px=2.2/min(R.x,R.y)*t;float e=1.-smoothstep(0.,px,md);float g=exp(-md*7.)*.22*smoothstep(.72,.3,length(uv));gl_FragColor=vec4(mix(mix(teal,rose,.5),vec3(1.),.25),max(e*.85,g));return;}',
+ ' vec3 p=ro+rd*t,n=nor(p),q=tr(p);vec3 l=normalize(vec3(.5,.8,.6));',
+ ' float dif=dot(n,l)*.5+.5,fr=pow(1.-max(dot(n,-rd),0.),2.5),sp=pow(max(dot(reflect(rd,n),l),0.),48.);',
+ ' float m=.5+.5*sin(q.y*2.6+q.x*1.7+T*.45);vec3 base=mix(teal,rose,smoothstep(.15,.85,m));',
+ ' bool isDot=dots(q)<blob(q);if(isDot)base=mix(teal,vec3(1.),.35);',
+ ' vec3 col=base*(.66+.42*dif);',
+ ' col+=.035*cos(6.283*(fr*.8+vec3(0.,.33,.67))+T*.3);',
+ ' col=mix(col,vec3(1.,.97,.98),fr*.55)+sp*.55;',
+ ' col+=.12*base*pow(max(dot(n,-l),0.),2.);',
+ ' gl_FragColor=vec4(clamp(col,0.,1.),1.);}'
+ ].join('\n');
+ function sh(t,s){var o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(o);return o}
+ var pr;try{pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);if(!gl.getProgramParameter(pr,gl.LINK_STATUS))throw 1}catch(e){box.classList.add('nogl');return}
+ gl.useProgram(pr);var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+ var lp=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(lp);gl.vertexAttribPointer(lp,2,gl.FLOAT,false,0,0);
+ var uR=gl.getUniformLocation(pr,'R'),uT=gl.getUniformLocation(pr,'T'),uM=gl.getUniformLocation(pr,'M');
+ var mob=window.matchMedia('(max-width:900px)').matches,rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function size(){var r=cv.getBoundingClientRect(),k=Math.min(window.devicePixelRatio||1,mob?1.25:1.5),w=Math.max(1,Math.round(r.width*k)),h=Math.max(1,Math.round(r.height*k));if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;gl.viewport(0,0,w,h)}}
+ var tx=0,ty=0,mx=0,my=0;
+ box.closest('.rg').addEventListener('pointermove',function(e){var r=cv.getBoundingClientRect();tx=((e.clientX-r.left)/r.width-.5)*2;ty=((e.clientY-r.top)/r.height-.5)*2});
+ box.closest('.rg').addEventListener('pointerleave',function(){tx=ty=0});
+ var vis=false,raf=0,t0=performance.now(),acc=0,last=t0;
+ function frame(now){raf=0;size();acc+=Math.min(now-last,50);last=now;mx+=(tx-mx)*.04;my+=(ty-my)*.04;
+  gl.uniform2f(uR,cv.width,cv.height);gl.uniform1f(uT,6+acc/1000);gl.uniform2f(uM,mx,my);gl.drawArrays(gl.TRIANGLES,0,3);
+  if(vis&&!rm&&!document.hidden)raf=requestAnimationFrame(frame)}
+ function go(){last=performance.now();if(!raf)raf=requestAnimationFrame(frame)}
+ if('IntersectionObserver' in window){new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis)go()},{rootMargin:'100px'}).observe(box)}else{vis=true;go()}
+ document.addEventListener('visibilitychange',function(){if(!document.hidden&&vis)go()});
+ window.addEventListener('resize',function(){if(rm)go()});
+ frame(performance.now());
+})();
+/* «Актуальные направления»: стрелки для свайп-ленты */
+(function(){var l=document.getElementById('hql');if(!l)return;
+ var nav=l.parentNode.querySelector('.hq-nav');if(!nav)return;
+ function st(){var b=nav.querySelectorAll('.hq-b');b[0].disabled=l.scrollLeft<=4;b[1].disabled=l.scrollLeft+l.clientWidth>=l.scrollWidth-4}
+ nav.addEventListener('click',function(e){var b=e.target.closest('.hq-b');if(!b)return;var c=l.querySelector('a');var w=c?c.getBoundingClientRect().width+12:l.clientWidth*.8;l.scrollBy({left:w*(+b.dataset.d),behavior:'smooth'})});
+ l.addEventListener('scroll',function(){requestAnimationFrame(st)},{passive:true});addEventListener('resize',st);st();
+})();
