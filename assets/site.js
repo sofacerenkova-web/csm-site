@@ -207,7 +207,7 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
 (function(){
  var cv=document.getElementById('regen3d');if(!cv)return;
  var box=cv.parentNode,gl=null;
- try{gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:false})}catch(e){}
+ try{gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false})}catch(e){}
  if(!gl){box.classList.add('nogl');return}
  var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
  var fs=[
@@ -227,7 +227,7 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
  ' vec3 ro=vec3(0,0,4.1),rd=normalize(vec3(uv,-1.55));float t=0.,md=1e3;bool hit=false;',
  ' for(int i=0;i<90;i++){vec3 p=ro+rd*t;float d=map(p);md=min(md,d);if(d<.001){hit=true;break;}t+=d*.9;if(t>7.)break;}',
  ' vec3 teal=vec3(.396,.773,.812),rose=vec3(.87,.66,.69),deep=vec3(.13,.42,.45);',
- ' if(!hit){float px=2.2/min(R.x,R.y)*t;float e=1.-smoothstep(0.,px,md);float g=exp(-md*7.)*.22*smoothstep(.72,.3,length(uv));gl_FragColor=vec4(mix(mix(teal,rose,.5),vec3(1.),.25),max(e*.85,g));return;}',
+ ' if(!hit){float px=2.2/min(R.x,R.y)*t;float e=1.-smoothstep(0.,px,md);float g=exp(-md*7.)*.22*smoothstep(.72,.3,length(uv));float aa=max(e*.85,g);gl_FragColor=vec4(mix(mix(teal,rose,.5),vec3(1.),.25)*aa,aa);return;}',
  ' vec3 p=ro+rd*t,n=nor(p),q=tr(p);vec3 l=normalize(vec3(.5,.8,.6));',
  ' float dif=dot(n,l)*.5+.5,fr=pow(1.-max(dot(n,-rd),0.),2.5),sp=pow(max(dot(reflect(rd,n),l),0.),48.);',
  ' float m=.5+.5*sin(q.y*2.6+q.x*1.7+T*.45);vec3 base=mix(teal,rose,smoothstep(.15,.85,m));',

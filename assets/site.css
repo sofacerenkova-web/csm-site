@@ -1250,3 +1250,18 @@ label{font-size:13px;font-weight:500}
  .hq-l b{display:block;font:600 14.5px/1.25 var(--sans);color:#17313A}
  .hq-l small{display:block;font-size:13px;color:var(--mut);margin-top:3px}
 }
+
+/* регенеративный блок: мобильная версия */
+@media (max-width:700px){
+ .rg{padding:26px 20px 28px;gap:0;border-radius:26px}
+ .rg-vis{width:72%;max-width:280px;margin:-6px auto 4px}
+ .rg-k{font-size:13px!important;padding:7px 13px 7px 10px}
+ .rg h2{font-size:clamp(30px,8.4vw,36px);line-height:1.08;margin:16px 0 14px}
+ .rg h2 br{display:none}
+ .rg-tx>p{font-size:15.5px;margin:0 0 20px}
+ .rg-l{margin:0 0 24px}
+ .rg-l li{grid-template-columns:62px 1fr;gap:12px;padding:12px 0}
+ .rg-l b{font-size:21px}
+ .rg-l span{font-size:14px}
+ .rg .btn-r{width:100%;justify-content:center}
+}
