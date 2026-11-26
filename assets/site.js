@@ -303,12 +303,23 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
  [].forEach.call(bs,function(b){b.addEventListener('click',open)});
 })();
 
-/* ---------- звук видео на главном экране ---------- */
+/* ---------- видео на главном экране на телефоне/планшете ---------- */
 (function(){
- var b=document.querySelector('[data-sound]'),v=document.querySelector('.hvid video');if(!b||!v)return;
- b.addEventListener('click',function(){
-  var on=v.muted;v.muted=!on;
-  if(on){if(!v.dataset.ok){v.dataset.ok=1;v.poster=v.dataset.poster;var s=v.dataset.src;v.innerHTML='<source src="'+s+'.webm" type="video/webm"><source src="'+s+'.mp4" type="video/mp4">';v.load()}var p=v.play();if(p&&p.catch)p.catch(function(){})}
-  b.setAttribute('aria-pressed',on?'true':'false');b.setAttribute('aria-label',on?'Выключить звук':'Включить звук');
+ var v=document.querySelector('.ph-vid');if(!v)return;
+ var mq=window.matchMedia('(max-width:1100px)'),rm=window.matchMedia('(prefers-reduced-motion: reduce)');
+ function src(){if(v.dataset.ok)return;v.dataset.ok=1;var b=v.dataset.src;v.innerHTML='<source src="'+b+'.webm" type="video/webm"><source src="'+b+'.mp4" type="video/mp4">';v.load()}
+ function load(){if(!mq.matches)return;v.closest('.ph').classList.add('has-vid');if(rm.matches)return;src();var p=v.play();if(p&&p.catch)p.catch(function(){})}
+ load();if(mq.addEventListener)mq.addEventListener('change',load);
+ document.addEventListener('visibilitychange',function(){if(!v.dataset.ok||rm.matches||!mq.matches)return;document.hidden?v.pause():v.play().catch(function(){})});
+})();
+/* ---------- звук видео на главном экране (десктоп и телефон) ---------- */
+(function(){
+ [].forEach.call(document.querySelectorAll('[data-sound]'),function(b){
+  var box=b.closest('.hvid,.ph'),v=box&&box.querySelector('video');if(!v)return;
+  b.addEventListener('click',function(){
+   var on=v.muted;v.muted=!on;
+   if(on){if(!v.dataset.ok){v.dataset.ok=1;if(v.dataset.poster)v.poster=v.dataset.poster;var s=v.dataset.src;v.innerHTML='<source src="'+s+'.webm" type="video/webm"><source src="'+s+'.mp4" type="video/mp4">';v.load()}var p=v.play();if(p&&p.catch)p.catch(function(){})}
+   b.setAttribute('aria-pressed',on?'true':'false');b.setAttribute('aria-label',on?'Выключить звук':'Включить звук');
+  });
  });
 })();

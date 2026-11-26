@@ -1324,3 +1324,13 @@ label{font-size:13px;font-weight:500}
 }
 /* ===== Кнопки действия неподвижны при наведении ===== */
 .btn:hover,.btn-r:hover,.btn-m:hover,.btn:hover svg,.dk-bk:hover svg,.hv-play:hover,.hv-snd:hover,.hcta:hover,.hq-b:hover,.ar:hover,.hs:hover,.ib:hover,.hph:hover,.mcard a:hover,nav.mainnav .ddm-in .all:hover svg,.dock a:hover,.dock button:hover{transform:none!important}
+/* ===== Главный экран на телефоне: видео вместо фото ===== */
+.ph-vid,.ph-snd{display:none}
+@media (max-width:1100px){
+ .ph.has-vid>img{display:none}
+ .ph.has-vid .ph-vid{display:block;width:100%;aspect-ratio:4/5;max-height:78vh;object-fit:cover;border-radius:30px;background:#DCE6E5 url(video/hero-poster.jpg) center/cover;box-shadow:0 40px 80px -40px rgba(33,59,64,.45)}
+ .ph.has-vid .ph-snd{display:flex;left:auto;right:28px;top:76px;bottom:auto;font-size:13px;padding:5px 14px 5px 5px}
+ .ph.has-vid .ph-snd i{width:34px;height:34px}
+ .ph.has-vid .chip{display:none}
+}
+@media (max-width:700px){.ph.has-vid .ph-snd{right:24px;top:70px}}
