@@ -162,14 +162,19 @@ if(matchMedia('(hover:hover)').matches&&mo&&!h.classList.contains('home')){
 const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io3=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting)toc.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+x.target.id))}),{rootMargin:'-30% 0px -60% 0px'});toc.forEach(a=>{const t=$(a.getAttribute('href'));t&&io3.observe(t)})}
 })();
 
-/* Карусель специальных предложений */
+/* Карусель специальных предложений: стрелки в обе стороны, по кругу */
 (function(){const t=document.getElementById('ofTrack');if(!t)return;const pv=document.getElementById('ofPrev'),nx=document.getElementById('ofNext'),n=document.getElementById('ofN');
  const cards=()=>[].slice.call(t.children);
  function step(){const c=cards();return c.length>1?c[1].offsetLeft-c[0].offsetLeft:t.clientWidth}
- function upd(){const c=cards(),s=step(),per=Math.max(1,Math.round(t.clientWidth/s)),i=Math.round(t.scrollLeft/s),a=Math.min(c.length,i+1),b=Math.min(c.length,i+per);
+ function per(){return Math.max(1,Math.round(t.clientWidth/step()))}
+ function idx(){return Math.round(t.scrollLeft/step())}
+ function maxIdx(){return Math.max(0,cards().length-per())}
+ function upd(){const c=cards(),i=Math.min(idx(),maxIdx()),a=i+1,b=Math.min(c.length,i+per());
   if(n)n.textContent=(a===b?a:a+'–'+b)+' из '+c.length;
-  if(pv)pv.disabled=t.scrollLeft<4;if(nx)nx.disabled=t.scrollLeft+t.clientWidth>=t.scrollWidth-4}
- function go(d){const s=step(),per=Math.max(1,Math.round(t.clientWidth/s));t.scrollBy({left:d*s*(per>1?per-1:1),behavior:'smooth'})}
+  if(pv)pv.disabled=false;if(nx)nx.disabled=false}
+ function to(i){const c=cards();i=Math.max(0,Math.min(maxIdx(),i));t.scrollTo({left:c[i].offsetLeft-c[0].offsetLeft,behavior:'smooth'})}
+ function go(d){const i=Math.min(idx(),maxIdx()),m=maxIdx(),k=per()>1?per()-1:1;
+  if(d>0)to(i>=m?0:Math.min(m,i+k));else to(i<=0?m:Math.max(0,i-k))}
  pv&&pv.addEventListener('click',()=>go(-1));nx&&nx.addEventListener('click',()=>go(1));
  t.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();go(1)}if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}});
  let r;t.addEventListener('scroll',()=>{cancelAnimationFrame(r);r=requestAnimationFrame(upd)},{passive:true});addEventListener('resize',upd);upd()})();
