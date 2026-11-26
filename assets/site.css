@@ -1334,3 +1334,14 @@ label{font-size:13px;font-weight:500}
  .ph.has-vid .chip{display:none}
 }
 @media (max-width:700px){.ph.has-vid .ph-snd{right:24px;top:70px}}
+/* ===== «Направления и услуги»: светлый первый блок с анимированными линиями ===== */
+.phero.us-hero{background:#F7F6F2;padding-bottom:90px;isolation:isolate}
+.phero.us-hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(45% 70% at 85% 35%,rgba(101,197,207,.16),rgba(101,197,207,0) 70%),radial-gradient(35% 55% at 100% 100%,rgba(213,163,170,.18),rgba(213,163,170,0) 70%)}
+.us-hero .hlines{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.5) 40%,#000 65%);mask-image:linear-gradient(90deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.5) 40%,#000 65%)}
+.us-hero .hlines .hl-a{animation:hlw 16s ease-in-out infinite alternate}
+.us-hero .hlines .hl-b{animation:hlw 21s ease-in-out infinite alternate-reverse}
+@keyframes hlw{from{transform:translate3d(0,-14px,0)}to{transform:translate3d(-30px,18px,0)}}
+.us-hero h1{color:#17313A}.us-hero h1 em{color:#B5586C}
+.us-hero .lead{color:#3E585D}
+@media (max-width:700px){.us-hero .hlines{-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.25),#000 70%);mask-image:linear-gradient(180deg,rgba(0,0,0,.25),#000 70%)}.phero.us-hero{padding-bottom:60px}}
+@media (prefers-reduced-motion:reduce){.us-hero .hlines g{animation:none}}
