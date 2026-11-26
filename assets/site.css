@@ -1371,3 +1371,5 @@ body{padding-top:var(--hh,134px)}
 /* LCP: текст первого экрана главной виден сразу, без скрывающей анимации */
 html.mo .home-lcp .hr,html.mo .hero .hr{opacity:1;transform:none;transition:none}
 html.mo .hero .hw>span{transform:none;transition:none}
+/* LCP: прокрутка внутри каруселей без плавной анимации по умолчанию (стрелки задают плавность сами) — иначе привязка scroll-snap при загрузке сбрасывает LCP */
+body *{scroll-behavior:auto}
