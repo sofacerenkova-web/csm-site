@@ -1293,3 +1293,34 @@ label{font-size:13px;font-weight:500}
 .hv-snd[aria-pressed="true"] .i-off,.hv-snd[aria-pressed="true"] .t-off{display:none}
 /* телефон в шапке — по центру под кнопкой «Записаться на приём» */
 @media (min-width:1101px){.hcta{min-width:210px;justify-content:center}.hphone{min-width:210px;text-align:center;display:inline-flex;justify-content:center}}
+/* ===== Актуальные направления: крупнее (×2), лента со стрелками и свайпом ===== */
+@media (min-width:1101px){
+ .hq{margin-top:40px;padding-top:28px}
+ .hq-h{margin:0 0 22px}
+ .hq-h>span{font:600 26px var(--sans)!important;color:#17313A}
+ .hq-h{gap:24px}
+ .hq-h>a{margin-left:auto;font-size:16px}
+ .hq-nav{display:flex;gap:10px;order:3}
+ .hq-b{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(23,49,58,.16);background:#fff;color:#17313A;cursor:pointer;transition:background .3s,color .3s,opacity .3s}
+ .hq-b svg{width:20px;height:20px}
+ .hq-b:hover:not(:disabled){background:#17313A;color:#fff}
+ .hq-b:disabled{opacity:.35;cursor:default}
+ .hq-l{display:flex!important;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;padding:4px 2px 18px}
+ .hq-l::-webkit-scrollbar{display:none}
+ .hq-l a,.hq-l a:hover{flex:0 0 calc((100% - 48px)/4);scroll-snap-align:start;gap:20px;padding:20px 22px 20px 20px!important;border-radius:28px;background:#fff;border:1px solid rgba(23,49,58,.07);box-shadow:0 20px 40px -32px rgba(23,49,58,.5)}
+ .hq-l a{transition:box-shadow .3s,border-color .3s}
+ .hq-l a:hover{border-color:rgba(196,112,127,.45);box-shadow:0 26px 48px -30px rgba(23,49,58,.55)}
+ .hq-l img{width:88px;height:88px}
+ .hq-l b{font:600 19px/1.25 var(--sans)}
+ .hq-l small{font-size:15.5px;margin-top:6px}
+}
+@media (max-width:1100px){
+ .hq-h>span{font-size:18px}
+ .hq-b{width:46px;height:46px}
+ .hq-l a{flex-basis:82%;max-width:330px;gap:16px;padding:16px 18px 16px 16px;border-radius:24px}
+ .hq-l img{width:72px;height:72px}
+ .hq-l b{font-size:17px}
+ .hq-l small{font-size:14.5px;margin-top:4px}
+}
+/* ===== Кнопки действия неподвижны при наведении ===== */
+.btn:hover,.btn-r:hover,.btn-m:hover,.btn:hover svg,.dk-bk:hover svg,.hv-play:hover,.hv-snd:hover,.hcta:hover,.hq-b:hover,.ar:hover,.hs:hover,.ib:hover,.hph:hover,.mcard a:hover,nav.mainnav .ddm-in .all:hover svg,.dock a:hover,.dock button:hover{transform:none!important}
