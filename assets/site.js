@@ -323,3 +323,6 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
   });
  });
 })();
+
+/* scroll-snap включаем по первому действию пользователя (иначе привязка при загрузке сбрасывает LCP) */
+(function(){var h=document.documentElement,on=function(){h.classList.add('snap');['pointerdown','touchstart','wheel','keydown'].forEach(function(e){removeEventListener(e,on,true)})};['pointerdown','touchstart','wheel','keydown'].forEach(function(e){addEventListener(e,on,{capture:true,passive:true})});addEventListener('load',function(){setTimeout(on,6000)})})();
