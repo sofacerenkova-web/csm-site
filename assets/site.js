@@ -85,7 +85,7 @@ function index(){const out=[];(window.CSM_PAGES||[]).forEach(p=>out.push({t:p.t,
  (D.DOCTORS||[]).forEach(d=>out.push({t:d.name,d:d.role,u:'vrach-'+d.id,k:'Врач',x:norm(d.name+'.html '+d.role+' '+d.spec)}));
  (D.PRICES||[]).forEach(c=>c.items.forEach(i=>out.push({t:i[1],d:c.cat+' · '+i[2]+' ₽',u:'ceny.html?q='+encodeURIComponent(i[1].slice(0,40)),k:'Услуга',x:norm(i[1]+' '+c.cat+' '+i[0])})));return out}
 let IDX=null;
-if(so){const inp=$('input',so),ul=$('ul',so),hint=$('.hint',so);inp.addEventListener('input',()=>{IDX=IDX||index();const q=norm(inp.value.trim());ul.innerHTML='';if(q.length<2){hint.textContent='Например: УЗИ, SVF, гинеколог, ЭКГ, массаж';return}
+if(so){const inp=$('input',so),ul=$('ul',so),hint=$('.hint',so);inp.addEventListener('input',()=>{if(!window.CSM_PAGES&&!window.__pgl){window.__pgl=1;const sc=document.createElement('script');sc.src='assets/pages.js';sc.onload=()=>{IDX=null;inp.dispatchEvent(new Event('input'))};document.head.appendChild(sc)}IDX=IDX||index();const q=norm(inp.value.trim());ul.innerHTML='';if(q.length<2){hint.textContent='Например: УЗИ, SVF, гинеколог, ЭКГ, массаж';return}
  const ws=q.split(/\s+/);const r=IDX.filter(i=>ws.every(w=>i.x.indexOf(w)>-1)).map(i=>[i,(norm(i.t).indexOf(q)>-1?0:2)+(i.k==='Страница'?0:1)]).sort((a,b)=>a[1]-b[1]).map(x=>x[0]).slice(0,24);
  hint.textContent=r.length?'Найдено: '+r.length:'Ничего не найдено. Позвоните нам — подскажем: '+D.CLINIC.phone;
  r.forEach(i=>{const li=document.createElement('li');li.innerHTML='<a href="'+i.u+'"><i>'+i.k+'</i><b>'+esc(i.t)+'</b><small>'+esc(i.d)+'</small></a>';ul.appendChild(li)})})}
@@ -205,12 +205,12 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
   if(rm.matches)return;var b=v.dataset.src;
   v.innerHTML='<source src="'+b+'.webm" type="video/webm"><source src="'+b+'.mp4" type="video/mp4">';
   v.load();var p=v.play();if(p&&p.catch)p.catch(function(){});}
- load();if(mq.addEventListener)mq.addEventListener('change',load);
+ function later(){setTimeout(load,1200)}if(document.readyState==='complete')later();else addEventListener('load',later);if(mq.addEventListener)mq.addEventListener('change',load);
  document.addEventListener('visibilitychange',function(){if(!v.dataset.ok||rm.matches)return;document.hidden?v.pause():v.play().catch(function(){})});
 })();
 /* 3D-визуализация регенерации: живые «клетки», сливающиеся и делящиеся (WebGL, без библиотек) */
-(function(){
- var cv=document.getElementById('regen3d');if(!cv)return;
+(function rg(){
+ var cv=document.getElementById('regen3d');if(!cv)return;if(!rg.go&&'IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting})){io.disconnect();rg.go=1;rg()}},{rootMargin:'300px'});io.observe(cv);return}
  var box=cv.parentNode,gl=null;
  try{gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false})}catch(e){}
  if(!gl){box.classList.add('nogl');return}
@@ -292,7 +292,7 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
  function open(){
   var hv=document.querySelector('.hvid video');if(hv&&!hv.paused)hv.pause();
   var o=document.createElement('div');o.className='filmx';o.setAttribute('role','dialog');o.setAttribute('aria-label','Видео о Центре современной медицины');
-  o.innerHTML='<video controls playsinline autoplay poster="assets/video/hero-poster.jpg"><source src="assets/video/hero.webm" type="video/webm"><source src="assets/video/hero.mp4" type="video/mp4"></video><button type="button" aria-label="Закрыть">&times;</button>';
+  o.innerHTML='<video controls playsinline autoplay poster="assets/video/hero-poster.webp"><source src="assets/video/hero.webm" type="video/webm"><source src="assets/video/hero.mp4" type="video/mp4"></video><button type="button" aria-label="Закрыть">&times;</button>';
   document.body.appendChild(o);document.documentElement.style.overflow='hidden';
   requestAnimationFrame(function(){o.classList.add('on')});
   var v=o.querySelector('video');var p=v.play();if(p&&p.catch)p.catch(function(){});
@@ -309,7 +309,7 @@ const toc=$$('.toc a');if(toc.length&&'IntersectionObserver' in window){const io
  var mq=window.matchMedia('(max-width:1100px)'),rm=window.matchMedia('(prefers-reduced-motion: reduce)');
  function src(){if(v.dataset.ok)return;v.dataset.ok=1;var b=v.dataset.src;v.innerHTML='<source src="'+b+'.webm" type="video/webm"><source src="'+b+'.mp4" type="video/mp4">';v.load()}
  function load(){if(!mq.matches)return;v.closest('.ph').classList.add('has-vid');if(rm.matches)return;src();var p=v.play();if(p&&p.catch)p.catch(function(){})}
- load();if(mq.addEventListener)mq.addEventListener('change',load);
+ function later(){setTimeout(load,1200)}if(document.readyState==='complete')later();else addEventListener('load',later);if(mq.addEventListener)mq.addEventListener('change',load);
  document.addEventListener('visibilitychange',function(){if(!v.dataset.ok||rm.matches||!mq.matches)return;document.hidden?v.pause():v.play().catch(function(){})});
 })();
 /* ---------- звук видео на главном экране (десктоп и телефон) ---------- */

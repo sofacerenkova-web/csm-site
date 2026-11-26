@@ -1,6 +1,6 @@
 
-@font-face{font-family:'CSM Serif';src:url(fonts/csm-serif.ttf) format('truetype');font-weight:400 700;font-display:swap}
-@font-face{font-family:'CSM Sans';src:url(fonts/csm-sans.ttf) format('truetype');font-weight:400 700;font-display:swap}
+@font-face{font-family:'CSM Serif';src:url(fonts/csm-serif.woff) format('woff'),url(fonts/csm-serif.ttf) format('truetype');font-weight:400 700;font-display:swap}
+@font-face{font-family:'CSM Sans';src:url(fonts/csm-sans.woff) format('woff'),url(fonts/csm-sans.ttf) format('truetype');font-weight:400 700;font-display:swap}
 :root{--ink:#213B40;--teal:#65C5CF;--rose:#D5A3AA;--roseD:#BC7280;--acc:#216A73;--mint:#E8F3F2;--ivory:#F7F8F6;--mut:#5C7276;
 --serif:'CSM Serif','Cormorant Garamond',Georgia,serif;--sans:'Onest','CSM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;--ease:cubic-bezier(.16,.84,.24,1)}
 *{box-sizing:border-box;margin:0;padding:0}

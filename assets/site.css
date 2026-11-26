@@ -173,7 +173,7 @@ html.mo.go .ph-pic img{clip-path:inset(0);transform:none}
 .ava{position:relative;aspect-ratio:4/3.3;border-radius:18px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(150deg,#E3F1F0,#F6E8EA)}
 .ava img{width:100%;height:100%;object-fit:cover}
 .ava .ini{font:500 76px/1 var(--serif);color:rgba(33,106,115,.55);letter-spacing:.02em}
-.ava .ini+i{position:absolute;inset:auto 0 0;height:40%;background:url(img/mono-2.png) right bottom/60% no-repeat;opacity:.18}
+.ava .ini+i{position:absolute;inset:auto 0 0;height:40%;background:url(img/mono-2.webp) right bottom/60% no-repeat;opacity:.18}
 .dcard .tg{display:inline-block;align-self:flex-start;margin:18px 10px 0;font:700 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:999px;background:var(--mint);color:var(--acc)}
 .dcard h3{font-size:28px;line-height:1.08;margin:12px 10px 6px}
 .dcard .rl{margin:0 10px;font-size:14.5px;color:var(--mut)}
@@ -1035,7 +1035,7 @@ body.lock>header{transform:none!important}
  .hph:hover .hph-i{background:var(--acc);color:#fff;border-color:var(--acc)}
  .hph b{display:block;font:500 19px/1.2 var(--sans);font-feature-settings:'lnum'}
  .hph small{display:block;font-size:12.5px;color:var(--mut);margin-top:3px}
- .hvid{grid-area:v;display:block;position:relative;width:100%;height:clamp(540px,calc(100vh - 250px),680px);border-radius:36px;overflow:hidden;isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(white,black);background:#DCE6E5 url(video/hero-poster.jpg) center/cover;box-shadow:0 50px 100px -55px rgba(23,49,58,.6)}
+ .hvid{grid-area:v;display:block;position:relative;width:100%;height:clamp(540px,calc(100vh - 250px),680px);border-radius:36px;overflow:hidden;isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(white,black);background:#DCE6E5 url(video/hero-poster.webp) center/cover;box-shadow:0 50px 100px -55px rgba(23,49,58,.6)}
  .hv-fr{position:absolute;inset:0}
  .hv-fr video{display:block;width:100%;height:100%;object-fit:cover}
  .hv-fr::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,49,58,0) 50%,rgba(23,49,58,.45) 100%)}
@@ -1094,7 +1094,7 @@ label{font-size:13px;font-weight:500}
  .hph-i{background:#fff;border-color:transparent;box-shadow:0 10px 24px -14px rgba(23,49,58,.5)}
  .hvid{overflow:visible;-webkit-mask-image:none;background:none;box-shadow:none;height:clamp(560px,calc(100vh - 240px),700px)}
  .hvid::before{content:"";position:absolute;inset:34px -26px -26px 34px;border-radius:40px;background:linear-gradient(140deg,#7FCFD7 0%,#65C5CF 45%,#D5A3AA 100%);z-index:-1}
- .hv-fr{border-radius:36px;overflow:hidden;-webkit-mask-image:-webkit-radial-gradient(white,black);background:#DCE6E5 url(video/hero-poster.jpg) center/cover;box-shadow:0 40px 80px -40px rgba(23,49,58,.55)}
+ .hv-fr{border-radius:36px;overflow:hidden;-webkit-mask-image:-webkit-radial-gradient(white,black);background:#DCE6E5 url(video/hero-poster.webp) center/cover;box-shadow:0 40px 80px -40px rgba(23,49,58,.55)}
  .hv-bar{left:22px;right:22px;bottom:22px}
 }
 @media (min-width:1101px){.hx{max-width:660px}.hero h1{font-size:clamp(50px,4.6vw,76px)}.hero h1 em{display:inline-block}}
@@ -1328,7 +1328,7 @@ label{font-size:13px;font-weight:500}
 .ph-vid,.ph-snd{display:none}
 @media (max-width:1100px){
  .ph.has-vid>img{display:none}
- .ph.has-vid .ph-vid{display:block;width:100%;aspect-ratio:4/5;max-height:78vh;object-fit:cover;border-radius:30px;background:#DCE6E5 url(video/hero-poster.jpg) center/cover;box-shadow:0 40px 80px -40px rgba(33,59,64,.45)}
+ .ph.has-vid .ph-vid{display:block;width:100%;aspect-ratio:4/5;max-height:78vh;object-fit:cover;border-radius:30px;background:#DCE6E5 url(video/hero-poster.webp) center/cover;box-shadow:0 40px 80px -40px rgba(33,59,64,.45)}
  .ph.has-vid .ph-snd{display:flex;left:auto;right:28px;top:76px;bottom:auto;font-size:13px;padding:5px 14px 5px 5px}
  .ph.has-vid .ph-snd i{width:34px;height:34px}
  .ph.has-vid .chip{display:none}
@@ -1364,3 +1364,7 @@ label{font-size:13px;font-weight:500}
 .aud2 article.r li{background:#fff;color:#8e4b58}
 @media(max-width:1100px){.aud2{grid-template-columns:1fr}}
 .aud2 .tag{background:#E3F1F0;color:#2F6870}.aud2 article.r .tag{background:#fff;color:#8e4b58}
+/* CLS: стартовый отступ под шапку совпадает с реальной высотой до запуска JS */
+body{padding-top:var(--hh,134px)}
+@media(max-width:1100px){body{padding-top:var(--hh,93px)}}
+@media(max-width:767px){body{padding-top:var(--hh,73px)}}
