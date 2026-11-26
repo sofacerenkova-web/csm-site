@@ -1368,3 +1368,6 @@ label{font-size:13px;font-weight:500}
 body{padding-top:var(--hh,134px)}
 @media(max-width:1100px){body{padding-top:var(--hh,93px)}}
 @media(max-width:767px){body{padding-top:var(--hh,73px)}}
+/* LCP: текст первого экрана главной виден сразу, без скрывающей анимации */
+html.mo .home-lcp .hr,html.mo .hero .hr{opacity:1;transform:none;transition:none}
+html.mo .hero .hw>span{transform:none;transition:none}
