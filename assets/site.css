@@ -1375,3 +1375,6 @@ html.mo .hero .hw>span{transform:none;transition:none}
 body *{scroll-behavior:auto}
 /* LCP: привязка прокрутки каруселей включается после первого касания/прокрутки */
 html:not(.snap) *{scroll-snap-type:none!important}
+/* «Все направления» под лентой актуальных направлений — на телефоне и планшете */
+.hq-all{display:none}
+@media(max-width:1100px){.hq-all{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;padding:15px 20px;border-radius:14px;background:var(--mint,#E3F1F0);color:var(--acc,#2F6870);font:600 15px var(--sans)}.hq-all svg{width:18px;height:18px}}
