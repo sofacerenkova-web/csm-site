@@ -1378,3 +1378,37 @@ html:not(.snap) *{scroll-snap-type:none!important}
 /* «Все направления» под лентой актуальных направлений — на телефоне и планшете */
 .hq-all{display:none}
 @media(max-width:1100px){.hq-all{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;padding:15px 20px;border-radius:14px;background:var(--mint,#E3F1F0);color:var(--acc,#2F6870);font:600 15px var(--sans)}.hq-all svg{width:18px;height:18px}}
+/* ===== Адаптация для узких экранов (320–420 px) ===== */
+.docs{grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr))}
+@media(max-width:1100px){.docs{grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr))}}
+main *{overflow-wrap:break-word}
+main h1,main h2,main h3,main .h2{hyphens:auto;-webkit-hyphens:auto}
+@media(max-width:420px){
+ .mz-row .pr1 b,.svc-vs b,.dk b,.svc-pz b{white-space:normal}
+ .svc-vs>*,.svc-ind>*,.aud2>*,.g2>*,.g3>*,.g4>*,.steps>*,.rel>*,.tiles>*,.arts>*{min-width:0}
+}
+@media(max-width:374px){
+ .hd{gap:8px}.tools{gap:4px}.ib{width:38px;height:38px}.ib svg{width:18px;height:18px}
+ .brand img{width:46px;height:auto}
+}
+html,body{overflow-x:clip}
+/* «О клинике»: блок доверия — светлый фон с анимированными линиями, как первый экран «Все услуги» */
+.about.ok-light{position:relative;background:#F7F6F2;color:#17313A;isolation:isolate}
+.about.ok-light::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(45% 70% at 85% 35%,rgba(101,197,207,.16),rgba(101,197,207,0) 70%),radial-gradient(35% 55% at 100% 100%,rgba(213,163,170,.18),rgba(213,163,170,0) 70%)}
+.about.ok-light .hlines{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.25),#000 70%);mask-image:linear-gradient(180deg,rgba(0,0,0,.25),#000 70%)}
+.about.ok-light .hlines .hl-a{animation:hlw 16s ease-in-out infinite alternate}
+.about.ok-light .hlines .hl-b{animation:hlw 21s ease-in-out infinite alternate-reverse}
+.about.ok-light h2{color:#17313A}.about.ok-light h2 em{color:#B5586C}
+.about.ok-light .adv{grid-template-columns:repeat(4,1fr);border-top-color:rgba(33,59,64,.14)}
+.about.ok-light .adv h3{color:#17313A}.about.ok-light .adv p{color:#3E585D}.about.ok-light .adv i{color:#B5586C}
+@media(max-width:1100px){.about.ok-light .adv{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.about.ok-light .adv{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.about.ok-light .hlines g{animation:none}}
+html.a11y .about.ok-light .hlines{display:none}
+.about.ok-light .hlines{opacity:.55}
+.tr-zones>*{min-width:0}
+@media(max-width:420px){.tr-zones span{font-size:20px;padding:16px 14px}}
+@media(max-width:420px){.wrap>*,.info2>*,.info2 a>*{min-width:0}main a{overflow-wrap:anywhere}}
+.dcard>*{min-width:0}
+@media(max-width:374px){.dcard{grid-template-columns:78px 1fr;column-gap:12px;padding:14px}.dcard .act{flex-wrap:wrap}.dcard .act .btn{flex:1 1 120px}}
+@media(max-width:374px){.dcard .ava{width:100%!important;min-width:0}}
